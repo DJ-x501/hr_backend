@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum Role{
+  SUPERADMIN
+  ORGANIZATION
+  EMPLOYEE
+}
+
+//superadmin table 
+
+model SuperAdmin{
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  contact String @unique 
+  avatarUrl String?
+  password String
+  role Role @default(SUPERADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //relationship
+  organization Organization[]
+}
+
+model Organization{
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  contact String @unique
+  address String
+  status Boolean @default(true)
+  type String
+  avatarUrl String?
+  password String
+  role Role @default(ORGANIZATION)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //relationship
+  adminID String @unique
+  admin SuperAdmin @relation(fields: [adminID], references: [id])
+
+}
+
+model Employee{
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  contact String @unique
+  avatarUrl String?
+  password String
+  address String
+  post String
+  status Boolean @default(true)
+  role Role @default(EMPLOYEE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Plan {
+  id String @id @default(cuid())
+  name String
+  price Float
+  features String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
