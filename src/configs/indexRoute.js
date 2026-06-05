@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authRoute = require("../module/auth.admin/authRoute");
-
+const orgRoute = require("../module/admin.organisation/organisationRoute");
 
 // Define the root route
 router.get('/',function(req,res){
@@ -11,6 +11,14 @@ router.get('/',function(req,res){
 
 //auth routes for all users & admin
 router.use("/auth", authRoute);
+
+
+
+
+
+
+//admin side organisation routes
+router.use("/admin",orgRoute)
 
 
 module.exports = router;

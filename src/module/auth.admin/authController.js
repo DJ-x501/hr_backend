@@ -27,7 +27,6 @@ class AuthController {
             status: "success",
             message: "Admin logged in successfully",
             data: response,
-            token:token
         });
     });
 };
